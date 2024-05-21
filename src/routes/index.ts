@@ -5,10 +5,9 @@ import * as FieldController from '../controllers/FieldController';
 import * as CropController from '../controllers/CropController';
 import * as IrrigationController from '../controllers/IrrigationController';
 import { getUserFieldsDetails } from '../controllers/UserController';
+
+
 const routes = Router();
-
-
-
 
 // User routes
 routes.use('/user', createRoutes(UserConroller, 'user'));

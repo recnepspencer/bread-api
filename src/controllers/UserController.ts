@@ -58,7 +58,6 @@ export const updateUser = async (req: Request, res: Response) => {
             user.username = username || user.username;
             user.email = email || user.email;
             user.fields = fields || user.fields;
-            await user.save(); // This triggers Mongoose middleware
             res.json(user);
         } else {
             res.status(404).json({ message: 'User not found' });
