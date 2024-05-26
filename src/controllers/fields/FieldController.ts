@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Field from '../models/Field';
+import Field from '../../models/Field';
 
 // Create a new field
 export const createField = async (req: Request, res: Response) => {

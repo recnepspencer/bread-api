@@ -1,0 +1,38 @@
+### Create a new inventory item
+POST http://localhost:3000/inventory
+Content-Type: application/json
+
+{
+    "type": "seed",
+    "cost": 100.50,
+    "expirationDate": "2025-12-31",
+    "orderNumber": "ORD123456",
+    "dateReceived": "2024-05-23",
+    "quantity": 200,
+    "supplier": "Acme Seeds",
+    "notes": "High-quality seeds"
+}
+
+### Get all inventory items
+GET http://localhost:3000/inventory
+
+### Get a single inventory item by ID
+GET http://localhost:3000/inventory/6652c991e70276f889d43df3
+
+### Update an inventory item
+#PUT http://localhost:3000/inventory/{{inventoryId}}
+Content-Type: application/json
+
+{
+    "type": "fertilizer",
+    "cost": 75.00,
+    "expirationDate": "2025-06-30",
+    "orderNumber": "ORD654321",
+    "dateReceived": "2024-05-24",
+    "quantity": 50,
+    "supplier": "Best Fertilizers Co.",
+    "notes": "Organic fertilizer"
+}
+
+### Delete an inventory item
+#DELETE http://localhost:3000/inventory/{{inventoryId}}

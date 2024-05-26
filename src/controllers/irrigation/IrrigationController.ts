@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Irrigation from '../models/Irrigation'; // Import the Irrigation model
+import Irrigation from '../../models/Irrigation'; // Import the Irrigation model
 
 // Create a new irrigation system
 export const createIrrigation = async (req: Request, res: Response) => {
