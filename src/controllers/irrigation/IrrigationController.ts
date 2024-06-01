@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import Irrigation from '../../models/Irrigation'; // Import the Irrigation model
+import Irrigation from '../../models/Irrigation';
+import { isMongoError } from '../../utils/validation';
 
 // Create a new irrigation system
 export const createIrrigation = async (req: Request, res: Response) => {
@@ -13,7 +14,8 @@ export const createIrrigation = async (req: Request, res: Response) => {
         await irrigation.save();
         res.status(201).send(irrigation);
     } catch (error) {
-        res.status(400).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(400).send({ message: 'Error creating irrigation system', error: message });
     }
 };
 
@@ -23,7 +25,8 @@ export const getIrrigations = async (req: Request, res: Response) => {
         const irrigations = await Irrigation.find();
         res.status(200).send(irrigations);
     } catch (error) {
-        res.status(500).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(500).send({ message: 'Error retrieving irrigation systems', error: message });
     }
 };
 
@@ -37,7 +40,8 @@ export const getIrrigation = async (req: Request, res: Response) => {
         }
         res.status(200).send(irrigation);
     } catch (error) {
-        res.status(500).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(500).send({ message: 'Error retrieving irrigation system', error: message });
     }
 };
 
@@ -52,7 +56,8 @@ export const updateIrrigation = async (req: Request, res: Response) => {
         }
         res.status(200).send(irrigation);
     } catch (error) {
-        res.status(400).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(400).send({ message: 'Error updating irrigation system', error: message });
     }
 };
 
@@ -66,7 +71,7 @@ export const deleteIrrigation = async (req: Request, res: Response) => {
         }
         res.status(200).send({ message: 'Irrigation deleted' });
     } catch (error) {
-        res.status(500).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(500).send({ message: 'Error deleting irrigation system', error: message });
     }
 };
-

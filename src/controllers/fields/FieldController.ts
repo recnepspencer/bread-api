@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Field from '../../models/Field';
+import { isMongoError } from '../../utils/validation';
 
 // Create a new field
 export const createField = async (req: Request, res: Response) => {
@@ -14,17 +15,19 @@ export const createField = async (req: Request, res: Response) => {
         await field.save();
         res.status(201).send(field);
     } catch (error) {
-        res.status(400).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(400).send({ message: 'Error creating field', error: message });
     }
 };
 
 // Get all fields
 export const getFields = async (req: Request, res: Response) => {
     try {
-        const fields = await Field.find();
+        const fields = await Field.find().populate('crop irrigationType');
         res.status(200).send(fields);
     } catch (error) {
-        res.status(500).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(500).send({ message: 'Error retrieving fields', error: message });
     }
 };
 
@@ -32,13 +35,14 @@ export const getFields = async (req: Request, res: Response) => {
 export const getField = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const field = await Field.findById(id);
+        const field = await Field.findById(id).populate('crop irrigationType');
         if (!field) {
             return res.status(404).send({ message: 'Field not found' });
         }
         res.status(200).send(field);
     } catch (error) {
-        res.status(500).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(500).send({ message: 'Error retrieving field', error: message });
     }
 };
 
@@ -53,7 +57,8 @@ export const updateField = async (req: Request, res: Response) => {
         }
         res.status(200).send(field);
     } catch (error) {
-        res.status(400).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(400).send({ message: 'Error updating field', error: message });
     }
 };
 
@@ -67,6 +72,7 @@ export const deleteField = async (req: Request, res: Response) => {
         }
         res.status(200).send({ message: 'Field deleted' });
     } catch (error) {
-        res.status(500).send(error);
+        const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
+        res.status(500).send({ message: 'Error deleting field', error: message });
     }
 };
