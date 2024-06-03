@@ -6,8 +6,17 @@ import * as CropController from '../controllers/crops/CropController';
 import * as IrrigationController from '../controllers/irrigation/IrrigationController';
 import { getUserFieldsDetails } from '../controllers/users/UserController';
 import * as InventoryController from '../controllers/inventory/InventoryController';
+import { requiresAuth } from 'express-openid-connect';
 
 const routes = Router();
+
+routes.get('/', (req, res) => {
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  });
+
+routes.get('/profile', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user));
+  });
 
 // User routes
 routes.use('/user', createRoutes(UserConroller, 'user'));
