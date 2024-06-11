@@ -26,11 +26,6 @@
  *                 type: string
  *                 description: The user's email
  *                 example: john.doe@example.com
- *               fields:
- *                 type: array
- *                 items:
- *                   type: string
- *                 description: The fields associated with the user
  *     responses:
  *       201:
  *         description: User created successfully
@@ -63,23 +58,18 @@
 
 /**
  * @swagger
- * /user/{username}:
+ * /user/{id}:
  *   get:
- *     summary: Get a single user by username or email, including their fields
+ *     summary: Get a single user by ID
  *     tags: [User]
  *     parameters:
- *       - in: query
- *         name: username
- *         required: false
+ *       - in: path
+ *         name: id
+ *         required: true
  *         schema:
  *           type: string
- *         description: The username of the user
- *       - in: query
- *         name: email
- *         required: false
- *         schema:
- *           type: string
- *         description: The email of the user
+ *           format: uuid
+ *         description: The user ID
  *     responses:
  *       200:
  *         description: User found
@@ -97,7 +87,7 @@
  * @swagger
  * /user/{id}:
  *   put:
- *     summary: Update user's username, email, or fields
+ *     summary: Update user's username or email
  *     tags: [User]
  *     parameters:
  *       - in: path
@@ -122,11 +112,6 @@
  *                 type: string
  *                 description: The user's email
  *                 example: john.doe@example.com
- *               fields:
- *                 type: array
- *                 items:
- *                   type: string
- *                 description: The fields associated with the user
  *     responses:
  *       200:
  *         description: User updated successfully
@@ -165,33 +150,6 @@
 
 /**
  * @swagger
- * /user/{userId}/fields:
- *   get:
- *     summary: Get detailed information about user's fields
- *     tags: [User]
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *         description: The user ID
- *     responses:
- *       200:
- *         description: User's fields information retrieved successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       404:
- *         description: User not found
- *       500:
- *         description: Error fetching user details
- */
-
-/**
- * @swagger
  * components:
  *   schemas:
  *     User:
@@ -199,7 +157,6 @@
  *       required:
  *         - username
  *         - email
- *         - fields
  *       properties:
  *         id:
  *           type: string
@@ -211,15 +168,8 @@
  *         email:
  *           type: string
  *           description: The email of the user
- *         fields:
- *           type: array
- *           items:
- *             type: string
- *           description: The fields associated with the user
  *       example:
  *         id: d5fE_asz
  *         username: john_doe
  *         email: john.doe@example.com
- *         fields: ['field1', 'field2']
  */
-
