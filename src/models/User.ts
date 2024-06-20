@@ -17,10 +17,25 @@ const userSchema = new Schema({
         trim: true,
         validate: [validator.isEmail, 'Please provide a valid email address'],
     },
-    fields: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Field',
-    }]
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [8, 'Password must be at least 8 characters long'],
+    },
+    firstName: {
+        type: String,
+        required: [true, 'First name is required'],
+        trim: true,
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Last name is required'],
+        trim: true,
+    },
+    preferences: {
+        type: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+    },
+    madeRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
 });
 
 const User = model('User', userSchema);

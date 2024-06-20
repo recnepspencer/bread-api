@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const app: Express = express();
 
-app.use(auth(authConfig));
+//app.use(auth(authConfig));
 app.use(cors());
 app.use(express.json());
 app.use('/', routes);

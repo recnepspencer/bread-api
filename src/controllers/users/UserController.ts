@@ -5,8 +5,8 @@ import { isMongoError } from '../../utils/validation';
 // Create a new user
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { username, email } = req.body;
-        const newUser = new User({ username, email });
+        const { username, email, password, firstName, lastName, preferences, madeRecipes } = req.body;
+        const newUser = new User({ username, email, password, firstName, lastName, preferences, madeRecipes });
         await newUser.save();
         res.status(201).json(newUser);
     } catch (error) {
@@ -18,7 +18,7 @@ export const createUser = async (req: Request, res: Response) => {
 // Get all users
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        const users = await User.find();
+        const users = await User.find().populate('preferences').populate('madeRecipes');
         res.json(users);
     } catch (error) {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
@@ -30,7 +30,7 @@ export const getUsers = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate('preferences').populate('madeRecipes');
         if (user) {
             res.json(user);
         } else {
@@ -42,16 +42,21 @@ export const getUser = async (req: Request, res: Response) => {
     }
 };
 
-// Update user's username or email
+// Update user's details
 export const updateUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { username, email } = req.body;
-        
+        const { username, email, password, firstName, lastName, preferences, madeRecipes } = req.body;
+
         const user = await User.findById(id);
         if (user) {
             user.username = username || user.username;
             user.email = email || user.email;
+            user.password = password || user.password;
+            user.firstName = firstName || user.firstName;
+            user.lastName = lastName || user.lastName;
+            user.preferences = preferences || user.preferences;
+            user.madeRecipes = madeRecipes || user.madeRecipes;
             await user.save();
             res.json(user);
         } else {
