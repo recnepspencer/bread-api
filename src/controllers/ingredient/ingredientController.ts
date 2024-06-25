@@ -5,8 +5,8 @@ import { isMongoError } from '../../utils/validation';
 // Create a new ingredient
 export const createIngredient = async (req: Request, res: Response) => {
     try {
-        const { name, measurementType, caloriesPerMeasurement } = req.body;
-        const newIngredient = new Ingredient({ name, measurementType, caloriesPerMeasurement });
+        const { name } = req.body;
+        const newIngredient = new Ingredient({ name });
         await newIngredient.save();
         res.status(201).json(newIngredient);
     } catch (error) {
@@ -46,13 +46,11 @@ export const getIngredient = async (req: Request, res: Response) => {
 export const updateIngredient = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { name, measurementType, caloriesPerMeasurement } = req.body;
+        const { name } = req.body;
 
         const ingredient = await Ingredient.findById(id);
         if (ingredient) {
             ingredient.name = name || ingredient.name;
-            ingredient.measurementType = measurementType || ingredient.measurementType;
-            ingredient.caloriesPerMeasurement = caloriesPerMeasurement || ingredient.caloriesPerMeasurement;
             await ingredient.save();
             res.json(ingredient);
         } else {

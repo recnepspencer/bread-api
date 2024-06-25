@@ -11,6 +11,10 @@ const recipeSchema = new Schema({
         required: [true, 'Recipe description is required'],
     },
     ingredients: [{type: Schema.Types.ObjectId, ref: 'Ingredient'}],
+    quantity: {
+        type: String,
+        required: [true, 'Quantity is required'],
+    },
     instructions: {
         type: [String],
         required: [true, 'Instructions are required'],
