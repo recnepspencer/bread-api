@@ -33,6 +33,7 @@ routes.delete('/tag/:id', tagController.deleteTag);
 // Ingredient routes
 routes.get('/ingredient', ingredientController.getIngredients);
 routes.get('/ingredient/:id', ingredientController.getIngredient);
+routes.get('/ingredient/:name', ingredientController.getIngredientByName);
 routes.post('/ingredient', ingredientController.createIngredient);
 routes.put('/ingredient/:id', ingredientController.updateIngredient);
 routes.delete('/ingredient/:id', ingredientController.deleteIngredient);
