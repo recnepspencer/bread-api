@@ -15,10 +15,19 @@ export const createRecipe = async (req: Request, res: Response) => {
     }
 };
 
+
 // Get all recipes
 export const getRecipes = async (req: Request, res: Response) => {
     try {
-        const recipes = await Recipe.find().populate('tags').populate('ingredients');
+        const recipes = await Recipe.find()
+            .populate({
+                path: 'ingredients.ingredient',
+                select: 'name'
+            })
+            .populate({
+                path: 'tags',
+                select: 'name'
+            });
         res.json(recipes);
     } catch (error) {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
@@ -30,7 +39,15 @@ export const getRecipes = async (req: Request, res: Response) => {
 export const getRecipe = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const recipe = await Recipe.findById(id).populate('tags').populate('ingredients');
+        const recipe = await Recipe.findById(id)
+            .populate({
+                path: 'ingredients.ingredient',
+                select: 'name'
+            })
+            .populate({
+                path: 'tags',
+                select: 'name'
+            });
         if (recipe) {
             res.json(recipe);
         } else {
