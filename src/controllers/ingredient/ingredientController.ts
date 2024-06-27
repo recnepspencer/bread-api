@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Ingredient from '../../models/Ingredient';
 import { isMongoError } from '../../utils/validation';
 
+
 // Create a new ingredient
 export const createIngredient = async (req: Request, res: Response) => {
     try {
@@ -14,6 +15,8 @@ export const createIngredient = async (req: Request, res: Response) => {
         res.status(400).json({ message: 'Error creating ingredient', error: message });
     }
 };
+
+
 
 // Get all ingredients
 export const getIngredients = async (req: Request, res: Response) => {
