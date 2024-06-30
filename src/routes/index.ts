@@ -8,9 +8,9 @@ import * as recipeController from '../controllers/recipes/recipeController';
 
 const routes = Router();
 
-// routes.get('/', (req, res) => {
-//     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-//   });
+routes.get('/', (req, res) => {
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  });
 
 
 // User routes
