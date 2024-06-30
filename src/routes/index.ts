@@ -12,9 +12,8 @@ routes.get('/', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
   });
 
-
 // User routes
-routes.get('/user', UserConroller.getUsers);
+routes.get('/user', UserConroller.getUsers, requiresAuth());
 routes.get('/user/:id', UserConroller.getUser);
 routes.post('/user', UserConroller.createUser);
 routes.put('/user/:id', UserConroller.updateUser);
