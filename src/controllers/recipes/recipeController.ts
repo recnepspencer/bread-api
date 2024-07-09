@@ -28,7 +28,7 @@ export const getRecipes = async (req: Request, res: Response) => {
                 path: 'tags',
                 select: 'name'
             });
-        res.json(recipes);
+        res.status(200).json(recipes);
     } catch (error) {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
         res.status(500).json({ message: 'Error retrieving recipes', error: message });
@@ -49,7 +49,7 @@ export const getRecipe = async (req: Request, res: Response) => {
                 select: 'name'
             });
         if (recipe) {
-            res.json(recipe);
+            res.status(200).json(recipe);
         } else {
             res.status(404).json({ message: 'Recipe not found' });
         }
@@ -76,7 +76,7 @@ export const updateRecipe = async (req: Request, res: Response) => {
             recipe.imagePath = imagePath || recipe.imagePath;
             recipe.difficulty = difficulty || recipe.difficulty;
             await recipe.save();
-            res.json(recipe);
+            res.status(200).json(recipe);
         } else {
             res.status(404).json({ message: 'Recipe not found' });
         }
@@ -92,7 +92,7 @@ export const deleteRecipe = async (req: Request, res: Response) => {
         const { id } = req.params;
         const deletedRecipe = await Recipe.findByIdAndDelete(id);
         if (deletedRecipe) {
-            res.json({ message: 'Recipe deleted successfully' });
+            res.status(200).json({ message: 'Recipe deleted successfully' });
         } else {
             res.status(404).json({ message: 'Recipe not found' });
         }
