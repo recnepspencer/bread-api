@@ -29,3 +29,7 @@ Thumbs.db
 
 #ignore dist folder
 dist/
+
+# Ignore package files
+package.json
+package-lock.json
