@@ -27,6 +27,7 @@ export const getIngredients = async (req: Request, res: Response) => {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
         res.status(500).json({ message: 'Error retrieving ingredients', error: message });
     }
+    console.log(res.statusCode);
 };
 
 // Get a single ingredient by ID
@@ -43,6 +44,7 @@ export const getIngredient = async (req: Request, res: Response) => {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
         res.status(500).json({ message: 'Error retrieving ingredient', error: message });
     }
+    console.log(res.statusCode);
 };
 
 export const getIngredientByName = async (req: Request, res: Response) => {
@@ -50,7 +52,7 @@ export const getIngredientByName = async (req: Request, res: Response) => {
         const { name } = req.params;
         const ingredient = await Ingredient.findOne({ name });
         if (ingredient) {
-            res.json(ingredient);
+            res.status(200).json(ingredient);
         } else {
             res.status(404).json({ message: 'Ingredient not found' });
         }
@@ -70,7 +72,7 @@ export const updateIngredient = async (req: Request, res: Response) => {
         if (ingredient) {
             ingredient.name = name || ingredient.name;
             await ingredient.save();
-            res.json(ingredient);
+            res.status(201).json(ingredient);
         } else {
             res.status(404).json({ message: 'Ingredient not found' });
         }

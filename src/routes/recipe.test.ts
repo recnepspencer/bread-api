@@ -122,7 +122,7 @@ describe('Recipe Router', () => {
         
         const response = await request(app).put('/recipe/1').send(mockRecipe);
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         expect(response.body).toEqual(mockRecipe);
     });
 

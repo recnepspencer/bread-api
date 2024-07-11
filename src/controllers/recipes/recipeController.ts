@@ -76,7 +76,7 @@ export const updateRecipe = async (req: Request, res: Response) => {
             recipe.imagePath = imagePath || recipe.imagePath;
             recipe.difficulty = difficulty || recipe.difficulty;
             await recipe.save();
-            res.status(200).json(recipe);
+            res.status(201).json(recipe);
         } else {
             res.status(404).json({ message: 'Recipe not found' });
         }
