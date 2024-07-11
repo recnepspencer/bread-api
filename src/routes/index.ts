@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as UserConroller from '../controllers/users/UserController';
+import * as UserController from '../controllers/users/UserController';
 import { requiresAuth } from 'express-openid-connect';
 import * as tagController from '../controllers/tags/tagController';
 import * as ingredientController from '../controllers/ingredient/ingredientController';
@@ -13,11 +13,11 @@ routes.get('/', (req, res) => {
   });
 
 // User routes
-routes.get('/user', UserConroller.getUsers, requiresAuth());
-routes.get('/user/:id', UserConroller.getUser);
-routes.post('/user', UserConroller.createUser);
-routes.put('/user/:id', UserConroller.updateUser);
-routes.delete('/user/:id', UserConroller.deleteUser);
+routes.get('/user', UserController.getUsers, requiresAuth());
+routes.get('/user/:id', UserController.getUser);
+routes.post('/user', UserController.createUser);
+routes.put('/user/:id', UserController.updateUser);
+routes.delete('/user/:id', UserController.deleteUser);
 
 
 //tag routes
