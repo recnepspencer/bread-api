@@ -7,8 +7,8 @@ export const createTag = async (req: Request, res: Response) => {
     try {
         const { name } = req.body;
         const newTag = new Tag({ name });
-        await newTag.save();
-        res.status(201).json(newTag);
+        const savedTag = await newTag.save();
+        res.status(201).json(savedTag);
     } catch (error) {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
         res.status(400).json({ message: 'Error creating tag', error: message });
@@ -18,8 +18,8 @@ export const createTag = async (req: Request, res: Response) => {
 // Get all tags
 export const getTags = async (req: Request, res: Response) => {
     try {
-        const tags = await Tag.find();
-        res.json(tags);
+        const tags = await Tag.find().exec();
+        res.status(200).json(tags);
     } catch (error) {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
         res.status(500).json({ message: 'Error retrieving tags', error: message });
@@ -30,9 +30,9 @@ export const getTags = async (req: Request, res: Response) => {
 export const getTag = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const tag = await Tag.findById(id);
+        const tag = await Tag.findById(id).exec();
         if (tag) {
-            res.json(tag);
+            res.status(200).json(tag);
         } else {
             res.status(404).json({ message: 'Tag not found' });
         }
@@ -52,7 +52,7 @@ export const updateTag = async (req: Request, res: Response) => {
         if (tag) {
             tag.name = name || tag.name;
             await tag.save();
-            res.json(tag);
+            res.status(200).json(tag);
         } else {
             res.status(404).json({ message: 'Tag not found' });
         }
@@ -66,9 +66,9 @@ export const updateTag = async (req: Request, res: Response) => {
 export const deleteTag = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const deletedTag = await Tag.findByIdAndDelete(id);
+        const deletedTag = await Tag.findByIdAndDelete(id).exec();
         if (deletedTag) {
-            res.json({ message: 'Tag deleted successfully' });
+            res.status(200).json({ message: 'Tag deleted successfully' });
         } else {
             res.status(404).json({ message: 'Tag not found' });
         }
