@@ -22,7 +22,7 @@ export const createIngredient = async (req: Request, res: Response) => {
 export const getIngredients = async (req: Request, res: Response) => {
     try {
         const ingredients = await Ingredient.find();
-        res.json(ingredients);
+        res.status(200).json(ingredients);
     } catch (error) {
         const message = isMongoError(error) ? error.message : 'Unexpected error occurred';
         res.status(500).json({ message: 'Error retrieving ingredients', error: message });
@@ -35,7 +35,7 @@ export const getIngredient = async (req: Request, res: Response) => {
         const { id } = req.params;
         const ingredient = await Ingredient.findById(id);
         if (ingredient) {
-            res.json(ingredient);
+            res.status(200).json(ingredient);
         } else {
             res.status(404).json({ message: 'Ingredient not found' });
         }
