@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import Ingredient from '../../models/Ingredient';
 import { isMongoError } from '../../utils/validation';
 
-
 // Create a new ingredient
 export const createIngredient = async (req: Request, res: Response) => {
     try {
