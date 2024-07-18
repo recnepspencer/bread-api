@@ -10,7 +10,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: process.env.ENVIRONMENT === 'local' ? 'http://localhost:3000' : process.env.SERVER_BASE_URL,
       },
     ],
   },
