@@ -81,32 +81,6 @@
 
 /**
  * @swagger
- * /ingredient/name/{name}:
- *   get:
- *     summary: Get a single ingredient by name
- *     tags: [Ingredient]
- *     parameters:
- *       - in: path
- *         name: name
- *         required: true
- *         schema:
- *           type: string
- *         description: The ingredient name
- *     responses:
- *       200:
- *         description: Ingredient found
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Ingredient'
- *       404:
- *         description: Ingredient not found
- *       500:
- *         description: Error retrieving ingredient
- */
-
-/**
- * @swagger
  * /ingredient/{id}:
  *   put:
  *     summary: Update an ingredient by ID
